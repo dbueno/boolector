@@ -28,6 +28,7 @@
 #include "utils/btorstack.h"
 #include "utils/btorunionfind.h"
 #include "utils/btorutil.h"
+#include "dumper/btordumpsmt.h"
 
 /*------------------------------------------------------------------------*/
 
@@ -2120,6 +2121,19 @@ add_extensionality_lemmas (Btor *btor)
                  "    %s, %s",
                  btor_util_node2string (app0),
                  btor_util_node2string (app1));
+        if (btor_opt_get (btor, BTOR_OPT_LOGLEVEL) >= 1) {
+          fprintf(stdout, "dlb-extensionality: ");
+          btor_dumpsmt_dump_node (btor, stdout, app0, 10);
+          fprintf(stdout, "\n");
+          // btor_dumpsmt_dump_node (btor, stdout, app1, 10);
+          // BTORLOG (1, "");
+          // BTORLOG (1, "\neq");
+          // btor_dumpsmt_dump_node (btor, stdout, eq, 10);
+          // BTORLOG (1, "");
+          // BTORLOG (1, "\ncon");
+          // btor_dumpsmt_dump_node (btor, stdout, con, 10);
+          // BTORLOG (1, "");
+        }
       }
       btor_node_release (btor, app0);
       btor_node_release (btor, app1);
