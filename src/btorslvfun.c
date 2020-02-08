@@ -1515,6 +1515,10 @@ add_lemma (Btor *btor, BtorNode *fun, BtorNode *app1, BtorNode *app2)
   if (!btor_hashptr_table_get (slv->lemmas, lemma))
   {
     btor_hashptr_table_add (slv->lemmas, btor_node_copy (btor, lemma));
+    BTORLOG (1, "dlb-lemma-begin{{{");
+    btor_dumpsmt_dump_node (btor, stdout, lemma, 0);
+    fprintf (stdout, "\n");
+    BTORLOG (1, "dlb-lemma-end}}}");
     BTOR_PUSH_STACK (slv->cur_lemmas, lemma);
     slv->stats.lod_refinements++;
     slv->stats.lemmas_size_sum += lemma_size;
@@ -2122,17 +2126,11 @@ add_extensionality_lemmas (Btor *btor)
                  btor_util_node2string (app0),
                  btor_util_node2string (app1));
         if (btor_opt_get (btor, BTOR_OPT_LOGLEVEL) >= 1) {
-          fprintf(stdout, "dlb-extensionality: ");
-          btor_dumpsmt_dump_node (btor, stdout, app0, 10);
-          fprintf(stdout, "\n");
-          // btor_dumpsmt_dump_node (btor, stdout, app1, 10);
-          // BTORLOG (1, "");
-          // BTORLOG (1, "\neq");
-          // btor_dumpsmt_dump_node (btor, stdout, eq, 10);
-          // BTORLOG (1, "");
-          // BTORLOG (1, "\ncon");
-          // btor_dumpsmt_dump_node (btor, stdout, con, 10);
-          // BTORLOG (1, "");
+          // Looks like these lemmas are those from pg 178 of the JSAT paper, Lemmas on demand.
+          BTORLOG (1, "dlb-lemma-begin{{{");
+          btor_dumpsmt_dump_node (btor, stdout, con, 0);
+          fprintf (stdout, "\n");
+          BTORLOG (1, "dlb-lemma-end}}}");
         }
       }
       btor_node_release (btor, app0);
