@@ -805,7 +805,8 @@ recursively_dump_exp_smt (BtorSMTDumpContext *sdc,
         case BTOR_APPLY_NODE:
 
           if (btor_node_is_update (real_exp->e[0])
-              || btor_node_is_uf_array (real_exp->e[0]))
+              || btor_node_is_uf_array (real_exp->e[0])
+              || btor_node_is_const_array (real_exp->e[0]))
             op = "select ";
 
           /* we need the arguments in reversed order */
